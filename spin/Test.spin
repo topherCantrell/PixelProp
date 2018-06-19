@@ -33,7 +33,7 @@ PUB testAll
 
   PST.start(115200)
 
-  testSD  
+  testPixels  
 
 PUB testSD | i
 
@@ -67,13 +67,15 @@ PUB testPixels
 
   STRIP.init
 
-  PauseMSec(1000)
 
-  ' Draw the pattern on each strand (different colors)
-  STRIP.draw(2, @colors1, @pixelPattern, pinPIX1, 256)
-  STRIP.draw(2, @colors2, @pixelPattern, pinPIX2, 256)
-  STRIP.draw(2, @colors3, @pixelPattern, pinPIX3, 256)
-  STRIP.draw(2, @colors4, @pixelPattern, pinPIX4, 256) 
+  repeat
+    PauseMSec(1000)
+     
+    ' Draw the pattern on each strand (different colors)
+    STRIP.draw(2, @colors1, @pixelPattern, pinPIX1, 256)
+    STRIP.draw(2, @colors2, @pixelPattern, pinPIX2, 256)
+    STRIP.draw(2, @colors3, @pixelPattern, pinPIX3, 256)
+    STRIP.draw(2, @colors4, @pixelPattern, pinPIX4, 256) 
 
 PUB testSerial | c     
 
