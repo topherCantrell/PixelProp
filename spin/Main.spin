@@ -6,21 +6,21 @@ CON
 
     USE_WEB     =   1
 
-    pinWEBIN    =   0 ' From Pi0 to both CPUs
-    pinWEBOUT   =   2 ' Not actually connected
+    pinWEBIN    =  12 ' From Pi0 to both CPUs
+    pinWEBOUT   =  14 ' Not actually connected
 
-    pinSYNCin   =  10 ' Board header
-    pinSYNCout  =  11 ' Board header
+    pinSYNCin   =  10 
+    pinSYNCout  =  11 
      
-    pinS1       =  19 ' Purple
-    pinS2       =  20 ' White
-    pinS3       =  21 ' Yellow
-    pinS4       =  22 ' Gray
+    pinS1       =   0 
+    pinS2       =   1 
+    pinS3       =   2 
+    pinS4       =   3 
     '
-    pinCS       =  24 ' PCB
-    pinDI       =  25 ' PCB
-    pinSCLK     =  26 ' PCB
-    pinDO       =  27 ' PCB          
+    pinCS       =  24 
+    pinDI       =  25 
+    pinSCLK     =  26 
+    pinDO       =  27           
 
 OBJ    
     STRIPA   : "NeoPixelStrip"
@@ -57,9 +57,9 @@ PUB main | i, j
   ' Initialize the sync
   dira[pinSYNCout] := 1
   outa[pinSYNCout] := 0         
-  dira[pinSYNCin] := 0  
-  syncSignalMy := 0
-  syncSignalOther := 0
+  dira[pinSYNCin]  := 0  
+  syncSignalMy     := 0
+  syncSignalOther  := 0
 
   ' Drive the data lines low to start
   outa[pinS1] := 0
@@ -95,15 +95,6 @@ PUB main | i, j
 
   PST.str(string("PixelHat 2018-1",13))
 
-  {
-  if USE_WEB==1
-    PST.str(string("Fixed wait time for PiZero ...............................................................|",13))   
-    repeat i from 1 to 90 ' 90 seconds
-      PauseMSec(1000)    
-      PST.char($2E)
-    PST.str(string(13,"Done waiting for PiZero.",13))
-    }                       
-  
   WEB.StartRxTx(pinWEBIN, pinWEBOUT, 0, 115200)
 
   ' frameBuffer used for scratch during the startup process
@@ -239,26 +230,11 @@ PRI syncToOther | i
   else
     syncSignalMy := 1
   outa[pinSYNCout] := syncSignalMy
-
-  'PST.str(string("Flipped my sync to "))
-  'PST.hex(syncSignalMy,2)
-  'PST.char(13)
-  
-  'PST.str(string("Waiting for other ..."))
-  
+    
   ' Now wait for the input to flip
   repeat while ina[pinSYNCin] == syncSignalOther
-  
-  'PST.str(string(" ... flipped.",13))
+
   syncSignalOther := ina[pinSYNCin]
-
-{
-PRI dumpSD(p) | i
-
-  repeat i from 0 to 8
-    PST.hex(byte[p+i],2)
-    PST.char(32)
-}       
 
 PRI strCmp(a,b)
 ' Compare two strings. Return 1 if the same or 0 if not  
