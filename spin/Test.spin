@@ -15,6 +15,11 @@ CON
     pinPIX2 = 1
     pinPIX3 = 2
     pinPIX4 = 3
+    ' On Tim's board
+    pinPIX5 = 4
+    pinPIX6 = 5
+    pinPIX7 = 6
+    pinPIX8 = 7
 
     ' GPIO - pins P8 - P15
     pinGPIO8  = 8
@@ -46,6 +51,16 @@ PUB testHardware | i
   outa[pinPIX3] := 0
   dira[pinPIX4] := 1
   outa[pinPIX4] := 0
+  '
+  ' On Tim's board
+  'dira[pinPIX5] := 1
+  'outa[pinPIX5] := 0
+  'dira[pinPIX6] := 1
+  'outa[pinPIX6] := 0
+  'dira[pinPIX7] := 1
+  'outa[pinPIX7] := 0
+  'dira[pinPIX8] := 1
+  'outa[pinPIX8] := 0
 
   STRIP.init
 
@@ -63,14 +78,14 @@ PUB testHardware | i
   
   PST.str(string("Reading the SD card ...",13))
 
-  i := SD.start(@sectorBuffer, pinDO, pinSCLK, pinDI, pinCS)
+  i := SD.start(@sectorBuffer, pinDO, pinSCLK, pinDI, pinCS)           
 
   PST.str(string("Return code: ")) 
   PST.hex(i,8)
   PST.char(13)
 
   SD.readFileSectors(@sectorBuffer,0,1)
-  repeat i from 0 to 15
+  repeat i from 0 to 512
     PST.hex(sectorBuffer[i],2)
     PST.char(32)
 
@@ -127,6 +142,11 @@ PUB testHardware | i
   PST.str(string("Press a key to redraw the pixels.",13))
   PST.str(string("You should get back YourKey + 1",13))
 
+  STRIP.draw(2, @colors1, @pixelPattern, pinPIX1, 256)
+  STRIP.draw(2, @colors2, @pixelPattern, pinPIX2, 256)
+  STRIP.draw(2, @colors3, @pixelPattern, pinPIX3, 256)
+  STRIP.draw(2, @colors4, @pixelPattern, pinPIX4, 256) 
+
   repeat
   
     i := PST.charIn
@@ -138,7 +158,7 @@ PUB testHardware | i
     STRIP.draw(2, @colors2, @pixelPattern, pinPIX2, 256)
     STRIP.draw(2, @colors3, @pixelPattern, pinPIX3, 256)
     STRIP.draw(2, @colors4, @pixelPattern, pinPIX4, 256) 
-      
+
 PRI PauseMSec(Duration)
   waitcnt(((clkfreq / 1_000 * Duration - 3932) #> 381) + cnt)
 
