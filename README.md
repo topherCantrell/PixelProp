@@ -2,11 +2,11 @@
 
 Generic NeoPixel Driver using the Propeller
 
-![](https://github.com/topherCantrell/PixelProp/blob/master/art/PixelPropSCH.jpg)
+![](art/PixelPropSCH.jpg)
 
-![](https://github.com/topherCantrell/PixelProp/blob/master/art/PixelPropPCB.jpg)
+![](art/PixelPropPCB.jpg)
 
-![](https://github.com/topherCantrell/PixelProp/blob/master/art/multi.jpg)
+![](art/multi.jpg)
 
 ## Bill of Materials
 
