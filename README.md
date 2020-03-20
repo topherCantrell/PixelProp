@@ -1,5 +1,10 @@
 # PixelProp
 
+Notes for next rev:
+  - The holes for the level converter board are not big enough
+  - There is a resistor in the way of the microsd slot (had to cut the slot a bit)
+  - There are vias near the microsd slot that contact the metal of the slot
+
 Generic NeoPixel Driver using the Propeller
 
 ![](art/PixelPropSCH.jpg)
