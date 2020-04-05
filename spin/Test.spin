@@ -38,6 +38,39 @@ OBJ
     
 VAR
     byte sectorBuffer[2048]
+    byte buff[512]
+
+    
+pri dumpSector(address) | i,j,t
+    t:=0
+    repeat i from 0 to 31
+      PST.hex(t,4)
+      PST.char(" ")
+      repeat j from 0 to 15
+        PST.hex(byte[address],2)
+        PST.char(" ")
+        address += 1
+        t+=1
+      PST.char(13)
+      ' TODO ASCII
+      
+PUB testSD | i
+
+  PauseMSec(2000)   ' Give the user time to switch to terminal  
+  PST.start(115200) ' Start the serial terminal
+    
+  i := SD.start(@buff, pinDO, pinSCLK, pinDI, pinCS)           
+
+  PST.str(string("Return code: ")) 
+  PST.hex(i,8)
+  PST.char(13)
+
+  SD.readFileSectors(@sectorBuffer,0,1)
+
+  dumpSector(@sectorBuffer)
+
+  repeat
+
 
 PUB testHardware | i
 
